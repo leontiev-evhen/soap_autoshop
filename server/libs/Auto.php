@@ -10,12 +10,12 @@ class Auto
 
 	public function getAuto ()
 	{
-		return $this->model->getAuto();
+		return json_encode($this->model->getAuto());
 	}
 
 	public function getAutoInfo ($id)
 	{
-		return $this->model->getAutoInfo($id);
+		return json_encode($this->model->getAutoInfo($id));
 	}
 
 } 

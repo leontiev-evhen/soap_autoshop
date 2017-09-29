@@ -3,13 +3,17 @@ require_once 'config.php';
 
 spl_autoload_register(function ($class_name) 
 {
-    require_once 'libs/'.$class_name . '.php';
+    require_once 'backend/'.$class_name . '.php';
 });
+
 try 
 {
-	$server = new SoapServer(WSDL_URL, array('cache_wsdl' => WSDL_CACHE_NONE));
-	$server->setClass("Auto");
-	$server->handle();
+	//header("Content-Type: text/json; charset=utf-8");
+	ini_set("soap.wsdl_cache_enabled", "0");
+	$client = new App();
+	var_dump($client->start());
+
+
 } 
 catch (SoapFault $fault) 
 {
@@ -19,4 +23,3 @@ catch (Exception $e)
 { 
     $error = "Error: " . $e->getMessage();
 }
-

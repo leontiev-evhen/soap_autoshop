@@ -2,7 +2,9 @@
 
 define('HOST', 'localhost');
 define('DB', 'auto_shop');
-//define('USER', 'user1');
+//define('DB', 'user11');
+//define('USER', 'user11');
 define('USER', 'root');
-//define('PASSWORD_SQL', 'tuser1');
+//define('PASSWORD', 'tuser11');
 define('PASSWORD', 'root');
+define('WSDL_URL', 'http://courses.site/soap/soap-server/server/auto.wsdl');
