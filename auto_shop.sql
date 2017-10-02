@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost:3306
--- Время создания: Сен 28 2017 г., 14:41
+-- Время создания: Окт 02 2017 г., 13:03
 -- Версия сервера: 10.1.25-MariaDB-
 -- Версия PHP: 7.0.22-0ubuntu0.17.04.1
 
@@ -43,8 +43,14 @@ INSERT INTO `auto` (`id`, `model_id`, `color`, `price`, `image`) VALUES
 (2, 2, 'white', 2000, 'me.png'),
 (3, 3, 'black', 3000, 'ms.png'),
 (4, 4, 'red', 5000, 'bmw6.png'),
-(5, 4, 'blue', 4000, 'bmw5.png'),
-(6, 6, 'blue', 5000, 'bmwi8.png');
+(5, 5, 'blue', 4000, 'bmw5.png'),
+(6, 6, 'blue', 5000, 'bmwi8.png'),
+(7, 7, 'grey', 2000, 'vw_polo.png'),
+(8, 8, 'white', 3000, 'vw_jetta.png'),
+(9, 9, 'red', 4000, 'vw_passat.png'),
+(10, 10, 'red', 1000, 'opel_astra.png'),
+(11, 11, 'red', 1000, 'opel_corsa.png'),
+(12, 12, 'red', 1000, 'opel_f.png');
 
 -- --------------------------------------------------------
 
@@ -112,8 +118,27 @@ CREATE TABLE `orders` (
   `auto_id` int(11) NOT NULL,
   `name` varchar(30) NOT NULL,
   `surname` varchar(30) NOT NULL,
-  `payment` varchar(30) NOT NULL
+  `payment_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `payment_methods`
+--
+
+CREATE TABLE `payment_methods` (
+  `id` int(11) NOT NULL,
+  `name` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `payment_methods`
+--
+
+INSERT INTO `payment_methods` (`id`, `name`) VALUES
+(1, 'Card'),
+(2, 'Cash');
 
 --
 -- Индексы сохранённых таблиц
@@ -124,7 +149,9 @@ CREATE TABLE `orders` (
 --
 ALTER TABLE `auto`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `auto_fk1` (`model_id`);
+  ADD KEY `model_id` (`model_id`),
+  ADD KEY `color` (`color`),
+  ADD KEY `price` (`price`);
 
 --
 -- Индексы таблицы `mark`
@@ -137,6 +164,9 @@ ALTER TABLE `mark`
 --
 ALTER TABLE `model`
   ADD PRIMARY KEY (`id`),
+  ADD KEY `engine_capacity` (`engine_capacity`),
+  ADD KEY `year` (`year`),
+  ADD KEY `max_speed` (`max_speed`),
   ADD KEY `mark_id` (`mark_id`);
 
 --
@@ -144,7 +174,14 @@ ALTER TABLE `model`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `auto_id` (`auto_id`);
+  ADD KEY `auto_id` (`auto_id`),
+  ADD KEY `payment_id` (`payment_id`);
+
+--
+-- Индексы таблицы `payment_methods`
+--
+ALTER TABLE `payment_methods`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT для сохранённых таблиц
@@ -154,7 +191,7 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT для таблицы `auto`
 --
 ALTER TABLE `auto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT для таблицы `mark`
 --
@@ -169,7 +206,12 @@ ALTER TABLE `model`
 -- AUTO_INCREMENT для таблицы `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+--
+-- AUTO_INCREMENT для таблицы `payment_methods`
+--
+ALTER TABLE `payment_methods`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- Ограничения внешнего ключа сохраненных таблиц
 --
@@ -190,7 +232,8 @@ ALTER TABLE `model`
 -- Ограничения внешнего ключа таблицы `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`auto_id`) REFERENCES `auto` (`id`);
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`auto_id`) REFERENCES `auto` (`id`),
+  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`payment_id`) REFERENCES `payment_methods` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

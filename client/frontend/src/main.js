@@ -3,12 +3,18 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import BootstrapVue from 'bootstrap-vue'
+//import BootstrapVue from 'bootstrap-vue'
 /* ...there may be other imports here */
-import 'bootstrap-vue/dist/bootstrap-vue.css'
-import 'bootstrap/dist/css/bootstrap.css'
+//import 'bootstrap-vue/dist/bootstrap-vue.css'
+//import 'bootstrap/dist/css/bootstrap.css'
 
-Vue.use(BootstrapVue)
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+
+import VeeValidate from 'vee-validate';
+
+//Vue.use(BootstrapVue)
+Vue.use(VeeValidate)
 
 Vue.config.productionTip = false
 

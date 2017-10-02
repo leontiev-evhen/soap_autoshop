@@ -55,9 +55,9 @@ class Sql
        return $this;
     }
 
-    public function where ($condition)
+    public function where ($condition, $on = '', $symbol = ' = ')
     {
-        $this->where = ' WHERE '.key($condition).' = '."'".$condition[key($condition)]."'";
+        $this->where .= (($on) ? ' '.strtoupper($on).' ' : ' WHERE ').key($condition).$symbol."'".$condition[key($condition)]."'";
         return $this;
     }
 

@@ -1,65 +1,110 @@
 <?xml version ='1.0' encoding ='UTF-8' ?> 
 <definitions name='AutoShop' 
- targetNamespace='http://example.org/AutoShop' 
- xmlns:tns=' http://example.org/AutoShop ' 
+ targetNamespace='http://courses.site' 
+ xmlns:tns='http://courses.site' 
  xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' 
  xmlns:xsd='http://www.w3.org/2001/XMLSchema' 
  xmlns:soapenc='http://schemas.xmlsoap.org/soap/encoding/' 
  xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' 
- xmlns='http://schemas.xmlsoap.org/wsdl/'> 
+ xmlns='http://schemas.xmlsoap.org/wsdl/'>
+  <message name='Request'> 
+    <part name='id' type='xsd:int'/> 
+  </message> 
+  <message name='String'> 
+    <part name='result' type='xsd:string'/> 
+  </message> 
+  <message name="getAutoSoapRequest">
+    <part name="parameters" type='xsd:string'/>
+  </message>
 
-<message name='Request'> 
- <part name='id' type='xsd:int'/> 
-</message> 
-<message name='Response'> 
- <part name='result' type='xsd:string'/> 
-</message> 
-<message name="getAutoSoapRequest">
-<part name="parameters" type='xsd:string'/>
-</message>
+  <portType name='AutoShopPortType'> 
+    <operation name='getAutoInfo'> 
+      <input message='tns:Request'/> 
+      <output message='tns:String'/> 
+    </operation> 
+    <operation name='getAuto'> 
+      <input message='tns:getAutoSoapRequest'/> 
+      <output message='tns:String'/> 
+    </operation>
+    <operation name='preOrderAuto'> 
+      <input message='tns:String'/> 
+      <output message='tns:String'/> 
+    </operation>
+    <operation name='filterAuto'> 
+      <input message='tns:String'/> 
+      <output message='tns:String'/> 
+   </operation>
+    <operation name='getModelAuto'> 
+      <input message='tns:getAutoSoapRequest'/> 
+      <output message='tns:String'/> 
+    </operation>
+  </portType> 
 
-<portType name='AutoShopPortType'> 
- <operation name='getAutoInfo'> 
-  <input message='tns:Request'/> 
-  <output message='tns:Response'/> 
- </operation> 
-<operation name='getAuto'> 
-  <input message='tns:getAutoSoapRequest'/> 
-  <output message='tns:Response'/> 
- </operation> 
-</portType> 
+  <binding name='AutoShopBinding' type='tns:AutoShopPortType'> 
+    <soap:binding style='rpc' 
+    transport='http://schemas.xmlsoap.org/soap/http'/> 
+    <operation name='getAutoInfo'> 
+      <soap:operation soapAction='urn:xmethods-delayed-quotes#getAutoInfo'/> 
+      <input> 
+        <soap:body use='encoded' namespace='urn:xmethods-delayed-quotes' 
+        encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'/> 
+      </input> 
+      <output> 
+        <soap:body use='encoded' namespace='urn:xmethods-delayed-quotes' 
+        encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'/> 
+      </output> 
+    </operation> 
 
-<binding name='AutoShopBinding' type='tns:AutoShopPortType'> 
- <soap:binding style='rpc' 
-  transport='http://schemas.xmlsoap.org/soap/http'/> 
- <operation name='getAutoInfo'> 
-  <soap:operation soapAction='urn:xmethods-delayed-quotes#getAutoInfo'/> 
-  <input> 
-   <soap:body use='encoded' namespace='urn:xmethods-delayed-quotes' 
-    encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'/> 
-  </input> 
-  <output> 
-   <soap:body use='encoded' namespace='urn:xmethods-delayed-quotes' 
-    encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'/> 
-  </output> 
- </operation> 
+    <operation name='getAuto'> 
+      <soap:operation soapAction='urn:xmethods-delayed-quotes#getAuto'/> 
+      <input> 
+        <soap:body use='encoded' namespace='urn:xmethods-delayed-quotes' 
+        encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'/> 
+      </input> 
+      <output> 
+        <soap:body use='encoded' namespace='urn:xmethods-delayed-quotes' 
+        encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'/> 
+     </output> 
+    </operation> 
 
-  <operation name='getAuto'> 
-  <soap:operation soapAction='urn:xmethods-delayed-quotes#getAuto'/> 
-  <input> 
-   <soap:body use='encoded' namespace='urn:xmethods-delayed-quotes' 
-    encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'/> 
-  </input> 
-  <output> 
-   <soap:body use='encoded' namespace='urn:xmethods-delayed-quotes' 
-    encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'/> 
-  </output> 
- </operation> 
-</binding> 
+    <operation name='preOrderAuto'> 
+      <soap:operation soapAction='urn:xmethods-delayed-quotes#preOrderAuto'/> 
+      <input> 
+        <soap:body use='encoded' namespace='urn:xmethods-delayed-quotes' 
+        encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'/> 
+      </input> 
+      <output> 
+        <soap:body use='encoded' namespace='urn:xmethods-delayed-quotes' 
+        encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'/> 
+      </output> 
+    </operation> 
+    <operation name='filterAuto'> 
+      <soap:operation soapAction='urn:xmethods-delayed-quotes#filterAuto'/> 
+      <input> 
+        <soap:body use='encoded' namespace='urn:xmethods-delayed-quotes' 
+        encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'/> 
+      </input> 
+      <output> 
+        <soap:body use='encoded' namespace='urn:xmethods-delayed-quotes' 
+        encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'/> 
+      </output> 
+    </operation> 
+    <operation name='getModelAuto'> 
+      <soap:operation soapAction='urn:xmethods-delayed-quotes#getModelAuto'/> 
+      <input> 
+        <soap:body use='encoded' namespace='urn:xmethods-delayed-quotes' 
+        encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'/> 
+      </input> 
+      <output> 
+        <soap:body use='encoded' namespace='urn:xmethods-delayed-quotes' 
+        encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'/> 
+      </output> 
+   </operation> 
+  </binding> 
 
 <service name='AutoShop'> 
- <port name='StockQuotePort' binding='AutoShopBinding'> 
-  <soap:address location='http://courses.site/soap/soap-server/server/index.php'/> 
- </port> 
-</service> 
+  <port name='AutoShopPort' binding='AutoShopBinding'> 
+    <soap:address location='http://courses.site/soap/soap-server/server/index.php'/> 
+  </port> 
+</service>
 </definitions> 

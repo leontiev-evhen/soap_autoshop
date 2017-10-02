@@ -8,13 +8,17 @@ spl_autoload_register(function ($class_name)
 
 try 
 {
-	//header("Content-Type: text/json; charset=utf-8");
+
+	header("Access-Control-Allow-Origin:*");
 	ini_set("soap.wsdl_cache_enabled", "0");
 	$client = new App();
-	var_dump($client->start());
 
 
-} 
+	if ($_SERVER['REQUEST_METHOD'] === 'POST')
+	{
+		$client->start($_POST);
+	}
+}
 catch (SoapFault $fault) 
 {
     $error = "Error: " . $fault->faultcode . ": " . $fault->getMessage() . "\n";
@@ -23,3 +27,5 @@ catch (Exception $e)
 { 
     $error = "Error: " . $e->getMessage();
 }
+
+require_once './template/index.html'; 

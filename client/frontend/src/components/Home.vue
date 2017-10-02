@@ -1,62 +1,19 @@
 <template>
   <div class="row">
     <div class="col-md-12">
-        <div class="panel panel-primary filterable">
-            <div class="panel-heading">
+        <div class="pblock pblock-primary filterable">
+            <div class="pblock-heading">
                 <h3 class="panel-title">
                     {{msg}}
                 </h3>
             </div>
-            <div class="collapse navbar-collapse" id="navbar-main">
-              <ul class="nav col-md-12">
-                <li> 
-                  <select class="form-control" id="filter_category">
-                    <option value="">Mark</option>
-                    <!--<option v-for="sort in options.sorts" :value="sort">{{sort}}</option>-->
-                  </select>
-                </li>
-                <li> 
-                  <select class="form-control" id="filter_category">
-                    <option value="">Model</option>
-                    <!--<option v-for="sort in options.sorts" :value="sort">{{sort}}</option>-->
-                  </select>
-                </li>
-                <li> 
-                  <select class="form-control" id="filter_category">
-                    <option value="">Year</option>
-                    <!--<option v-for="sort in options.sorts" :value="sort">{{sort}}</option>-->
-                  </select>
-                </li>
-                <li> 
-                  <select class="form-control" id="filter_category">
-                    <option value="">Value</option>
-                    <!--<option v-for="sort in options.sorts" :value="sort">{{sort}}</option>-->
-                  </select>
-                </li>
-                <li> 
-                  <select class="form-control" id="filter_category">
-                    <option value="">Color</option>
-                    <!--<option v-for="sort in options.sorts" :value="sort">{{sort}}</option>-->
-                  </select>
-                </li>
-                <li> 
-                  <select class="form-control" id="filter_category">
-                  <option value="">Max speed</option>
-                  <!--<option v-for="sort in options.sorts" :value="sort">{{sort}}</option>-->
-                  </select>
-                </li>
-                <li> 
-                  <select class="form-control" id="filter_category">
-                  <option value="">Price</option>
-                  <!--<option v-for="sort in options.sorts" :value="sort">{{sort}}</option>-->
-                  </select>
-                </li>
-                <li><button id="filter_clear" @click="">Clear</button></li>
-            </ul>
-        </div>
+            <filter-form></filter-form>
         </div>
         <div id="content">
-          <!--<product v-for="product in filteredProducts" :product="product"></product>-->
+          <div v-if="filter_result">
+            <auto-home v-for="item in data" :item="item"></auto-home>
+          </div>
+          <div class="notfind" v-else>nothing found</div>
         </div>
     </div>
   </div>
@@ -64,58 +21,49 @@
 
 
 <script>
+import AutoHome from './AutoHome.vue'
+import FilterForm from './FilterForm.vue'
 export default {
-  name: 'hello',
+  name: 'home',
   data () {
     return {
-      msg: 'Auto shop'
+      msg: 'Auto shop',
+      data: [],
+      auto: [],
+      filter_result: true
     }
   },
   created() {
-
-    var xhr = new XMLHttpRequest();
-
-    xhr.open('GET', 'http://localhost:8080/test.php', false);
-    xhr.send();
+    var xhr = new XMLHttpRequest()
+    var params = "action=getAll"
+    xhr.open('POST', this.$parent.AJAX_URL, false)
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+    xhr.send(params)
 
     if (xhr.status != 200) {
-      alert( xhr.status + ': ' + xhr.statusText );
+      console.log( xhr.status + ': ' + xhr.statusText )
     } else {
-      console.log(xhr);
-      //alert( xhr.responseText ); 
+      var result = JSON.parse(xhr.responseText)
+      if (result.status) {
+          this.auto = result.auto
+          this.data = result.auto
+      } else {
+        console.log(result.message)
+      }
     }
+  },
+  methods: {
+      getAuto: function() {
+          return this.auto
+      }
+  },
+  components:{
+    AutoHome, FilterForm
   }
 }
 </script>
 
 
 <style>
-.panel-primary {
-  border-color: #f90000;
-}
-.panel-primary > .panel-heading {
-  background-color: #f90000;
-  border-color: #f90000;
-}
-
-#filter_clear {
-    background-color: #f90000;
-    border: none;
-    padding: 5px;
-    color: #fff;
-    margin: 0 auto;
-    width: 100%;
-    border-radius: 4px;
-}
-
-.nav li {
-  display: inline-block;
-  width: 12%;
-}
-
-.form-control {
-  background-color: #000;
-  color: #fff;
-}
 
 </style>
