@@ -40,24 +40,19 @@
   		validForm: function() {
 			this.$validator.validateAll().then((result) => {
 		        if (result) {
-		          	
 		          	var xhr = new XMLHttpRequest();
 				    var params = "action=addOrder&auto_id=" + this.$route.params.id + "&name=" + this.name + "&surname=" + this.surname + "&payment_id=" + this.payment_id;
 				    xhr.open('POST', this.$parent.$parent.AJAX_URL, false);
 				    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 				    xhr.send(params);
-
 				    if (xhr.status != 200) {
 				      	console.log( xhr.status + ': ' + xhr.statusText );
 				    } else {
 				    	var result = JSON.parse(xhr.responseText)
 				      	if (result.status) {
-				 
 							this.result_form = true;
 				      	} else {
-				      		console.log(result)
-				      		//this.result = false
-				      		//this.error = result.message;
+				      		console.log(result.message)
 				      	}
 				    }
 		        }

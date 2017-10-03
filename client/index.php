@@ -21,11 +21,10 @@ try
 }
 catch (SoapFault $fault) 
 {
-    $error = "Error: " . $fault->faultcode . ": " . $fault->getMessage() . "\n";
+    $erros = "Error: " . $fault->faultcode . ": " . $fault->getMessage() . "\n";
+    echo json_encode(['status' => false, 'message' => $erros]);
+    die;
 }
-catch (Exception $e) 
-{ 
-    $error = "Error: " . $e->getMessage();
-}
+
 
 require_once './template/index.html'; 

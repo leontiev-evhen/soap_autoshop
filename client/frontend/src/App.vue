@@ -15,9 +15,9 @@ export default {
   name: 'app',
   data() {
     return {
-      AJAX_URL: 'http://courses.site/soap/soap-server/client/index.php',
-      assetUrl: 'http://courses.site/soap/soap-server/server/assets/',
-      assetAutoUrl: 'http://courses.site/soap/soap-server/server/assets/auto/',
+      AJAX_URL: 'http://192.168.0.15/~user11/soap/soap_autoshop/client/index.php',
+      assetUrl: 'http://192.168.0.15/~user11/soap/soap_autoshop/server/assets/',
+      assetAutoUrl: 'http://192.168.0.15/~user11/soap/soap_autoshop/server/assets/auto/',
     }
   }
 }
